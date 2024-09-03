@@ -1,0 +1,26 @@
+name: Ejecutar script de Predicciones
+
+on:
+  schedule:
+    - cron: '30 11 * * *'  # Ejecuta todos los días a las 11:30 AM UTC (ajusta según tu zona horaria)
+  workflow_dispatch:  # Permite ejecuciones manuales desde GitHub
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt  # Instala todas las dependencias listadas en requirements.txt
+
+    - name: Run the script
+      run: python PREDICCIONES.py
