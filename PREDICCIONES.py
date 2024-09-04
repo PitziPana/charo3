@@ -50,9 +50,9 @@ def formatear_previsiones(previsiones):
         estado_cielo = dia['estadoCielo'][0]['descripcion'].lower()
         if "despejado" in estado_cielo or "poco nuboso" in estado_cielo:
             emoji = "☀️"
-        elif "cubierto" in estado_cielo o "muy nuboso" in estado_cielo o "nublado" in estado_cielo:
+        elif "cubierto" in estado_cielo or "muy nuboso" in estado_cielo or "nublado" in estado_cielo:
             emoji = "☁️"
-        elif "lluvia" in estado_cielo o "chubascos" en estado_cielo:
+        elif "lluvia" in estado_cielo or "chubascos" in estado_cielo:
             emoji = "🌧️"
         else:
             emoji = "⛅"
