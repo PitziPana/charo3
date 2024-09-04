@@ -18,7 +18,14 @@ api_key = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKNDk0OEBpY2xvdWQuY29tIiwianRpIjoiMDU4
 telegram_token = '6659256025:AAFK3y_PbW3zhGzURyEc9v-7cZ1v9LwvNpc'
 chat_id = '317007077'  # Reemplaza con tu chat ID
 
-url = 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/48020'  # Código del municipio de Bilbao
+# URLs para las ciudades
+urls = {
+    'Bilbao': 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/48020',
+    'Zamora': 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/49275',
+    'Ayamonte': 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/21010',
+    'Huelva': 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/21041',
+    'Badajoz': 'https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/06015'
+}
 
 # Hacer la solicitud a la API para obtener las previsiones
 def obtener_previsiones(api_key, url):
@@ -39,13 +46,13 @@ def obtener_previsiones(api_key, url):
         print(f'Error en la solicitud: {response.status_code}')
 
 # Función para formatear los datos de previsión
-def formatear_previsiones(previsiones):
-    mensaje = ""
-    for dia in previsiones[0]['prediccion']['dia']:
+def formatear_previsiones(previsiones, ciudad):
+    mensaje = f"*Previsiones para {ciudad}*:\n"
+    for dia in previsiones[0]['prediccion']['dia'][:3]:  # Limita a 3 días
         fecha = datetime.strptime(dia['fecha'], '%Y-%m-%dT%H:%M:%S')
         dia_semana_en = fecha.strftime('%A')
         dia_semana_es = dias_semana[dia_semana_en]
-        dia_formateado = f"*September, día {fecha.strftime('%d')}, Bilbao ({dia_semana_es})*"
+        dia_formateado = f"*{fecha.strftime('%B')}, día {fecha.strftime('%d')} ({dia_semana_es})*"
 
         estado_cielo = dia['estadoCielo'][0]['descripcion'].lower()
         if "despejado" in estado_cielo or "poco nuboso" in estado_cielo:
@@ -72,10 +79,11 @@ def enviar_por_telegram(mensaje, token, chat_id):
     bot = telebot.TeleBot(token)
     bot.send_message(chat_id, mensaje, parse_mode="Markdown")
 
-# Ejecutar la función y enviar las previsiones por Telegram
-previsiones = obtener_previsiones(api_key, url)
-if previsiones:
-    mensaje = formatear_previsiones(previsiones)
-    enviar_por_telegram(mensaje, telegram_token, chat_id)
-else:
-    print("No se pudieron obtener las previsiones.")
+# Ejecutar la función y enviar las previsiones por Telegram para cada ciudad
+for ciudad, url in urls.items():
+    previsiones = obtener_previsiones(api_key, url)
+    if previsiones:
+        mensaje = formatear_previsiones(previsiones, ciudad)
+        enviar_por_telegram(mensaje, telegram_token, chat_id)
+    else:
+        print(f"No se pudieron obtener las previsiones para {ciudad}.")
