@@ -2,7 +2,7 @@ name: Ejecutar script de Predicciones
 
 on:
   schedule:
-    - cron: '55 22 * * *'  # Ejecuta todos los días a las 22:55 UTC
+    - cron: '36 02 * * *'  # Ejecuta todos los días a las 22:55 UTC
   workflow_dispatch:  # Permite ejecuciones manuales desde GitHub
 
 jobs:
