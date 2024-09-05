@@ -16,7 +16,7 @@ dias_semana = {
 # Credenciales
 api_key = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKNDk0OEBpY2xvdWQuY29tIiwianRpIjoiMDU4ZDJiNzAtNGJiNC00MWE2LTk1MzEtZmJmOWZhY2M5NmRjIiwiaXNzIjoiQUVNRVQiLCJpYXQiOjE3MTMyNDM4ODUsInVzZXJJZCI6IjA1OGQyYjcwLTRiYjQtNDFhNi05NTMxLWZiZjlmYWNjOTZkYyIsInJvbGUiOiIifQ.2QEECrTNbTmbBBo3hQCrI1sXu8Q8rHxUzT4q_-kfwxE'
 telegram_token = '6659256025:AAFK3y_PbW3zhGzURyEc9v-7cZ1v9LwvNpc'
-chat_id = ['317007077', '937187153']  # Reemplaza con tu chat ID
+chat_id = ['317007077']  # Reemplaza con tu chat ID
 
 # URLs para las ciudades
 urls = {
